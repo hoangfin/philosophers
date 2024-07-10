@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_sleep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/06/25 00:17:57 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/03 14:35:28 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/09 01:04:49 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include "philo.h"
+#include <unistd.h>
+#include <stdio.h>
+#include "action.h"
 #include "utils.h"
 
-int	init(t_app *app, int argc, char **argv)
+int	ft_sleep(t_philo *philo)
 {
-	app->number_of_philosophers = ft_atoi(argv[1], NULL);
-	app->time_to_die = ft_atoi(argv[2], NULL);
-	app->time_to_eat = ft_atoi(argv[3], NULL);
-	app->time_to_sleep = ft_atoi(argv[4], NULL);
-	app->number_of_times_each_philosopher_must_eat = 0;
-	if (argv[5] != NULL)
-		app->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5], NULL);
+	if (set_philo_state(SLEEPING, philo) == -1)
+		return (-1);
+	if (msleep(philo->app->time_to_sleep) == -1)
+		return (-1);
+	return (0);
 }

@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_philosophers.c                              :+:      :+:    :+:   */
+/*   action.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 23:43:36 by hoatran           #+#    #+#             */
-/*   Updated: 2024/06/24 23:44:48 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/05 12:30:32 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/05 21:46:16 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
+#ifndef ACTION_H
+# define ACTION_H
 
-int	create_philosophers(int number_of_philosophers)
-{
-	pthread_create()
-}
+# include "types.h"
+
+int	think(t_philo *philo);
+int	eat(t_philo *philo);
+int	ft_sleep(t_philo *philo);
+
+#endif

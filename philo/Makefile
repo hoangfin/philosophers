@@ -8,9 +8,35 @@ RESET := \033[0m
 BUILD_DIR := build
 
 CC := cc
-CFLAG := -Wall -Wextra -Werror -Iinclude
+CFLAG := -Wall -Wextra -Iinclude -pthread
+
+VPATH :=	src \
+			src/action \
+			src/routines \
+			src/utils
 
 SOURCES :=	main.c \
+			destroy.c \
+			init.c \
+			start.c \
+			wait.c \
+			\
+			eat.c \
+			ft_sleep.c \
+			think.c \
+			\
+			monitor_routine.c \
+			philo_routine.c \
+			\
+			acquire_locks.c \
+			ft_atol.c \
+			get_sim_state.c \
+			msleep.c \
+			now.c \
+			print_state.c \
+			release_locks.c \
+			set_philo_state.c \
+			set_sim_state.c \
 			validate.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)
