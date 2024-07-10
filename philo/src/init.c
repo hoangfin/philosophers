@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/10 18:42:05 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/10 23:23:01 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@ static int	init_philo(t_philo *philo, int i, t_app *app)
 		return (-1);
 	philo->left_fork = app->forks[i];
 	philo->right_fork = app->forks[(i + 1) % app->number_of_forks];
+	if (i == app->number_of_forks - 1)
+	{
+		philo->left_fork = app->forks[(i + 1) % app->number_of_forks];
+		philo->right_fork = app->forks[i];
+	}
 	philo->state_mutex = malloc(sizeof(pthread_mutex_t));
 	philo->meal_mutex = malloc(sizeof(pthread_mutex_t));
 	if (
-		philo->state_mutex == NULL
-		|| philo->meal_mutex == NULL
+		philo->state_mutex == NULL || philo->meal_mutex == NULL
 		|| pthread_mutex_init(philo->state_mutex, NULL) != 0
 		|| pthread_mutex_init(philo->meal_mutex, NULL) != 0
 	)
