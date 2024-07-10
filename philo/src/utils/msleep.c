@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:16:02 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/08 18:34:22 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/10 23:26:17 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	msleep(long duration)
 		return (-1);
 	while (current_time - start < duration)
 	{
-		if (usleep(350) == -1)
+		if (usleep(500) == -1)
 			return (-1);
 		current_time = now();
 		if (current_time == -1)
