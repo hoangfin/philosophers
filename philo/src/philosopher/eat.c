@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/13 19:07:52 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/14 20:44:48 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ static int	get_forks(t_philo *philo)
 		print_error("Error: set_philo_state: take left_fork", philo->sim);
 		pthread_mutex_unlock(philo->left_fork);
 		return (-1);
+	}
+	if (philo->sim->number_of_philos == 1)
+	{
+		msleep(philo->sim->time_to_die + 1);
+		pthread_mutex_unlock(philo->left_fork);
+		return (0);
 	}
 	if (pthread_mutex_lock(philo->right_fork) != 0)
 	{
