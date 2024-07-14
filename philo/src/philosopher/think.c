@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait.c                                             :+:      :+:    :+:   */
+/*   think.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 14:46:06 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/07 22:10:46 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/03 14:40:33 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 16:20:36 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <errno.h>
-#include "types.h"
+#include <unistd.h>
+#include "philosopher.h"
+#include "printer.h"
 
-int	wait(t_app *app)
+int	think(t_philo *philo)
 {
-	int			i;
-	int			rc;
-	pthread_t	thread;
-
-	i = 0;
-	while (i < app->number_of_threads)
+	if (set_philo_state(PHILO_THINKING, philo) == -1)
 	{
-		thread = *(app->philos[i].thread);
-		rc = pthread_join(thread, NULL);
-		if (rc != 0 && rc != ESRCH && rc != EINVAL)
-			return (-1);
-		i++;
+		print_error("Error: set_philo_state", philo->sim);
+		return (-1);
 	}
 	return (0);
 }

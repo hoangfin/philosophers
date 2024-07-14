@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   ft_sleep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 12:44:14 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/10 18:42:59 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/03 14:35:28 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 16:21:53 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "action.h"
+#include "philosopher.h"
+#include "printer.h"
 #include "utils.h"
 
-void	*philo_routine(void *arg)
+int	ft_sleep(t_philo *philo)
 {
-	t_philo *const	philo = (t_philo *) arg;
-
-	if (philo->id % 2 == 0 && msleep(1) == -1)
-		return (NULL);
-	while (get_sim_state(philo->app) == SIM_RUNNING)
+	if (set_philo_state(PHILO_SLEEPING, philo) == -1)
 	{
-		if (
-			think(philo) == -1
-			|| eat(philo) == -1
-			|| ft_sleep(philo) == -1
-		)
-			set_sim_state(SIM_ERROR, philo->app);
+		print_error("Error: set_philo_state", philo->sim);
+		return (-1);
 	}
-	return (NULL);
+	if (msleep(philo->sim->time_to_sleep) == -1)
+	{
+		print_error("Error: msleep", philo->sim);
+		return (-1);
+	}
+	return (0);
 }

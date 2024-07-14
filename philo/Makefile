@@ -8,35 +8,41 @@ RESET := \033[0m
 BUILD_DIR := build
 
 CC := cc
-CFLAG := -Wall -Wextra -Iinclude -pthread
+CFLAG := -Wall -Wextra -Werror -O3 -pthread -Iinclude
 
 VPATH :=	src \
-			src/action \
+			src/philosopher \
+			src/printer \
 			src/routines \
+			src/simulation \
 			src/utils
 
 SOURCES :=	main.c \
-			destroy.c \
-			init.c \
-			start.c \
-			wait.c \
 			\
 			eat.c \
 			ft_sleep.c \
+			get_philo_state.c \
+			init_philosopher.c \
+			set_philo_state.c \
 			think.c \
 			\
+			print_error.c \
+			\
 			monitor_routine.c \
-			philo_routine.c \
+			philosopher_routine.c \
+			\
+			destroy.c \
+			get_sim_state.c \
+			init.c \
+			set_sim_state.c \
+			start.c \
+			wait.c \
 			\
 			acquire_locks.c \
 			ft_atol.c \
-			get_sim_state.c \
 			msleep.c \
 			now.c \
-			print_state.c \
 			release_locks.c \
-			set_philo_state.c \
-			set_sim_state.c \
 			validate.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)

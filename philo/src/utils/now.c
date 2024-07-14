@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:36:43 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/06 21:08:59 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/12 17:27:57 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ long	now(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) < 0)
-	{
-		write(2, "gettimeofday: Couldn't get current time\n", 40);
 		return (-1);
-	}
 	return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
 }

@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sleep.c                                         :+:      :+:    :+:   */
+/*   philosopher_routine.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 14:35:28 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/09 01:04:49 by hoatran          ###   ########.fr       */
+/*   Created: 2024/06/25 12:44:14 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 19:32:51 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdio.h>
-#include "action.h"
+#include "philosopher.h"
+#include "simulation.h"
 #include "utils.h"
 
-int	ft_sleep(t_philo *philo)
+void	*philosopher_routine(void *arg)
 {
-	if (set_philo_state(SLEEPING, philo) == -1)
-		return (-1);
-	if (msleep(philo->app->time_to_sleep) == -1)
-		return (-1);
-	return (0);
+	t_philo *const	philo = (t_philo *) arg;
+
+	if (philo->id % 2 == 0 && msleep(1) == -1)
+		return (NULL);
+	while (get_sim_state(philo->sim) == SIM_RUNNING)
+	{
+		if (think(philo) == -1 || eat(philo) == -1 || ft_sleep(philo) == -1)
+			break ;
+	}
+	return (NULL);
 }

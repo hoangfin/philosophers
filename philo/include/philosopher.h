@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 20:02:38 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 14:39:40 by hoatran          ###   ########.fr       */
+/*   Created: 2024/06/24 20:11:54 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 17:26:05 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "simulation.h"
-#include "utils.h"
+#ifndef PHILOSOPHER_H
+# define PHILOSOPHER_H
 
-int	main(int argc, char **argv)
-{
-	t_sim	sim;
-	int		status;
-	int		wstatus;
+# include "types.h"
 
-	if (validate(argc, argv + 1) == 0)
-		return (EXIT_FAILURE);
-	if (init(&sim, argv) == -1)
-		return (EXIT_FAILURE);
-	status = start(&sim);
-	wstatus = wait(&sim);
-	destroy(&sim);
-	if (status < 0 || wstatus < 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
+int				init_philosopher(t_philo *philo, int id, t_sim	*sim);
+int				think(t_philo *philo);
+int				eat(t_philo *philo);
+int				ft_sleep(t_philo *philo);
+int				set_philo_state(t_philo_state state, t_philo *philo);
+t_philo_state	get_philo_state(t_philo *philo);
+
+#endif

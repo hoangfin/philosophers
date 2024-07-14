@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action.h                                           :+:      :+:    :+:   */
+/*   set_sim_state.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 12:30:32 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/05 21:46:16 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/07 11:01:59 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/12 19:59:48 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ACTION_H
-# define ACTION_H
+#include "simulation.h"
 
-# include "types.h"
-
-int	think(t_philo *philo);
-int	eat(t_philo *philo);
-int	ft_sleep(t_philo *philo);
-
-#endif
+void	set_sim_state(t_sim_state state, t_sim *sim)
+{
+	pthread_mutex_lock(sim->state_mutex);
+	sim->state = state;
+	pthread_mutex_unlock(sim->state_mutex);
+}

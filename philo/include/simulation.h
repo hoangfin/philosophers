@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   simulation.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 20:02:38 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 14:39:40 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/12 15:48:42 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 13:16:21 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "simulation.h"
-#include "utils.h"
+#ifndef SIMULATION_H
+# define SIMULATION_H
 
-int	main(int argc, char **argv)
-{
-	t_sim	sim;
-	int		status;
-	int		wstatus;
+# include "types.h"
 
-	if (validate(argc, argv + 1) == 0)
-		return (EXIT_FAILURE);
-	if (init(&sim, argv) == -1)
-		return (EXIT_FAILURE);
-	status = start(&sim);
-	wstatus = wait(&sim);
-	destroy(&sim);
-	if (status < 0 || wstatus < 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
+int			init(t_sim *simulation, char **argv);
+int			start(t_sim *simulation);
+int			wait(t_sim *simulation);
+void		destroy(t_sim *simulation);
+t_sim_state	get_sim_state(t_sim *sim);
+void		set_sim_state(t_sim_state state, t_sim *sim);
+
+#endif

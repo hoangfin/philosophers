@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_sim_state.c                                    :+:      :+:    :+:   */
+/*   routine.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 11:01:59 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/07 11:04:33 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/12 20:15:35 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/12 20:16:22 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "types.h"
+#ifndef ROUTINE_H
+# define ROUTINE_H
 
-void	set_sim_state(t_sim_state state, t_app *app)
-{
-	pthread_mutex_lock(app->sim_state_mutex);
-	app->sim_state = state;
-	pthread_mutex_unlock(app->sim_state_mutex);
-}
+void	*monitor_routine(void *arg);
+void	*philosopher_routine(void *arg);
+
+#endif

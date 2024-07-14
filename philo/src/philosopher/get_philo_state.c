@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   think.c                                            :+:      :+:    :+:   */
+/*   get_philo_state.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 14:40:33 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/09 01:04:56 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/11 23:02:21 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 16:53:52 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "action.h"
-#include "utils.h"
+#include "types.h"
 
-int	think(t_philo *philo)
+t_philo_state	get_philo_state(t_philo *philo)
 {
-	return (set_philo_state(THINKING, philo));
+	t_philo_state	state;
+
+	if (pthread_mutex_lock(philo->state_mutex) != 0)
+		return (PHILO_UNDEFINED);
+	state = philo->state;
+	if (pthread_mutex_unlock(philo->state_mutex) != 0)
+		return (PHILO_UNDEFINED);
+	return (state);
 }

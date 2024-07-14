@@ -6,48 +6,51 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:31:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/08 17:45:40 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/14 14:14:03 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "philo.h"
+#include "simulation.h"
 
-static void	delete_forks(t_app *app)
+static void	delete_forks(t_sim *sim)
 {
 	int	i;
 
 	i = 0;
-	while (i < app->number_of_forks)
+	while (i < sim->number_of_forks)
 	{
-		pthread_mutex_destroy(app->forks[i]);
-		free(app->forks[i]);
+		pthread_mutex_destroy(sim->forks[i]);
+		free(sim->forks[i]);
 		i++;
 	}
-	free(app->forks);
+	free(sim->forks);
 }
 
-static void	delete_philos(t_app *app)
+static void	delete_philos(t_sim *sim)
 {
 	int	i;
 
 	i = 0;
-	while (i < app->number_of_philos)
+	while (i < sim->number_of_philos)
 	{
-		pthread_mutex_destroy(app->philos[i].state_mutex);
-		pthread_mutex_destroy(app->philos[i].meal_mutex);
-		free(app->philos[i].state_mutex);
-		free(app->philos[i].meal_mutex);
-		free(app->philos[i].thread);
+		pthread_mutex_destroy(sim->philos[i].state_mutex);
+		pthread_mutex_destroy(sim->philos[i].meal_mutex);
+		free(sim->philos[i].state_mutex);
+		free(sim->philos[i].meal_mutex);
+		free(sim->philos[i].thread);
 		i++;
 	}
-	free(app->philos);
+	free(sim->philos);
 }
 
-void	destroy(t_app *app)
+void	destroy(t_sim *sim)
 {
-	delete_forks(app);
-	delete_philos(app);
-	pthread_mutex_destroy(app->sim_state_mutex);
-	free(app->sim_state_mutex);
+	delete_forks(sim);
+	delete_philos(sim);
+	pthread_mutex_destroy(sim->state_mutex);
+	pthread_mutex_destroy(sim->print_mutex);
+	free(sim->state_mutex);
+	free(sim->print_mutex);
+	free(sim->monitor_thread);
 }

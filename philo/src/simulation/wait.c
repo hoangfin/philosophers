@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 20:02:38 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 14:39:40 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/05 14:46:06 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/13 17:39:25 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <pthread.h>
+#include <errno.h>
 #include "simulation.h"
-#include "utils.h"
 
-int	main(int argc, char **argv)
+int	wait(t_sim *sim)
 {
-	t_sim	sim;
-	int		status;
-	int		wstatus;
+	int			i;
+	int			rc;
+	pthread_t	thread;
 
-	if (validate(argc, argv + 1) == 0)
-		return (EXIT_FAILURE);
-	if (init(&sim, argv) == -1)
-		return (EXIT_FAILURE);
-	status = start(&sim);
-	wstatus = wait(&sim);
-	destroy(&sim);
-	if (status < 0 || wstatus < 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	i = 0;
+	pthread_join(*sim->monitor_thread, NULL);
+	while (i < sim->number_of_threads)
+	{
+		thread = *(sim->philos[i].thread);
+		rc = pthread_join(thread, NULL);
+		if (rc != 0 && rc != ESRCH && rc != EINVAL)
+			return (-1);
+		i++;
+	}
+	return (0);
 }
