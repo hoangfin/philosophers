@@ -6,14 +6,14 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:24:59 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 19:52:24 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:47:18 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "utils.h"
 
-static t_bool	has_NaN(char **argv)
+static t_bool	has_not_a_number(char **argv)
 {
 	char	*temp;
 
@@ -65,7 +65,7 @@ t_bool	validate(int argc, char **argv)
 	(void)argv;
 	if (argc < 5 || argc > 6)
 		return (write(2, "Error: Invalid number of arguments\n", 35), false);
-	if (has_NaN(argv))
+	if (has_not_a_number(argv))
 		return (write(2, "Error: Not a number\n", 20), false);
 	if (has_invalid_number(argv))
 		return (false);

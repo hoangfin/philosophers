@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:03:44 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 13:48:06 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:48:05 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int	init_philosopher(t_philo *philo, int id, t_sim *sim)
 		return (-1);
 	philo->left_fork = sim->forks[id - 1];
 	philo->right_fork = sim->forks[id % sim->number_of_forks];
-	// if (id == sim->number_of_philos)
-	// {
-	// 	philo->left_fork = sim->forks[id % sim->number_of_forks];
-	// 	philo->right_fork = sim->forks[id - 1];
-	// }
 	philo->state_mutex = malloc(sizeof(pthread_mutex_t));
 	philo->meal_mutex = malloc(sizeof(pthread_mutex_t));
 	if (

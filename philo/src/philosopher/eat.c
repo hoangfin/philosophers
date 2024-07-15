@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 20:44:48 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:52:22 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "printer.h"
 #include "utils.h"
 
-static int	get_forks(t_philo *philo)
+static int	get_left_fork(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->left_fork) != 0)
 		return (print_error("Error: lock left_fork", philo->sim), -1);
@@ -29,8 +29,12 @@ static int	get_forks(t_philo *philo)
 	{
 		msleep(philo->sim->time_to_die + 1);
 		pthread_mutex_unlock(philo->left_fork);
-		return (0);
 	}
+	return (0);
+}
+
+static int	get_right_fork(t_philo *philo)
+{
 	if (pthread_mutex_lock(philo->right_fork) != 0)
 	{
 		print_error("Error: lock right_fork", philo->sim);
@@ -64,7 +68,7 @@ static int	release_forks(t_philo *philo)
 
 int	eat(t_philo *philo)
 {
-	if (get_forks(philo) == -1)
+	if (get_left_fork(philo) == -1 || get_right_fork(philo) == -1)
 		return (-1);
 	if (set_philo_state(PHILO_EATING, philo) == -1)
 	{
