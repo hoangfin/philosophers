@@ -8,7 +8,7 @@ RESET := \033[0m
 BUILD_DIR := build
 
 CC := cc
-CFLAG := -Wall -Wextra -Werror -O3 -pthread -Iinclude
+CFLAG := -Wall -Wextra -Werror -pthread -O3 -Iinclude
 
 VPATH :=	src \
 			src/philosopher \
