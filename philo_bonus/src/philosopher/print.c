@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 22:58:42 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 21:35:06 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/27 23:09:55 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	print(const char *msg, t_philo *philo)
 {
 	long	elapsed_time;
 
-	if (acquire_locks(philo)!= 0)
+	if (acquire_locks(philo) != 0)
 		return (-1);
 	if (sem_wait(philo->sim->printer) != 0)
 		exit(1);
