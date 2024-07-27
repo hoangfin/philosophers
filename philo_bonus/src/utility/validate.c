@@ -6,14 +6,14 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:24:59 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 22:38:12 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/17 17:35:10 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "utils.h"
+#include "utility.h"
 
-static t_bool	has_not_a_number(char **argv)
+static int	has_not_a_number(char **argv)
 {
 	char	*temp;
 
@@ -21,28 +21,28 @@ static t_bool	has_not_a_number(char **argv)
 	{
 		temp = *argv;
 		if (*temp == '\0')
-			return (true);
+			return (1);
 		while (*temp != '\0')
 		{
 			if (*temp == '-' || *temp == '+')
 			{
 				if (*(temp + 1) == '\0' || temp != *argv)
-					return (true);
+					return (1);
 			}
 			if (
 				!(*temp >= '0' && *temp <= '9')
 				&& *temp != '-'
 				&& *temp != '+'
 			)
-				return (true);
+				return (1);
 			temp++;
 		}
 		argv++;
 	}
-	return (false);
+	return (0);
 }
 
-static t_bool	has_invalid_number(char **argv)
+static int	has_invalid_number(char **argv)
 {
 	int		overflow;
 	long	number;
@@ -52,22 +52,22 @@ static t_bool	has_invalid_number(char **argv)
 	{
 		number = ft_atol(*argv, &overflow);
 		if (overflow)
-			return (write(2, "Error: Number out of range\n", 27), true);
+			return (write(2, "Error: Number out of range\n", 27), 1);
 		if (number <= 0)
-			return (write(2, "Error: Number must be > 0\n", 26), true);
+			return (write(2, "Error: Number must be > 0\n", 26), 1);
 		argv++;
 	}
-	return (false);
+	return (0);
 }
 
-t_bool	validate(int argc, char **argv)
+int	validate(int argc, char **argv)
 {
 	(void)argv;
 	if (argc < 5 || argc > 6)
-		return (write(2, "Error: Invalid number of arguments\n", 35), false);
+		return (write(2, "Error: Invalid number of arguments\n", 35), 0);
 	if (has_not_a_number(argv))
-		return (write(2, "Error: Not a number\n", 20), false);
+		return (write(2, "Error: Not a number\n", 20), 0);
 	if (has_invalid_number(argv))
-		return (false);
-	return (true);
+		return (0);
+	return (1);
 }
