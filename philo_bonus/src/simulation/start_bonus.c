@@ -6,13 +6,13 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 00:37:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/25 14:29:08 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "philo.h"
-#include "utility.h"
+#include "philo_bonus.h"
+#include "utils_bonus.h"
 
 int	start(t_sim *sim)
 {

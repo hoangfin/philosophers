@@ -6,15 +6,15 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 21:40:24 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "philo.h"
-#include "utility.h"
+#include "philo_bonus.h"
+#include "utils_bonus.h"
 
 static int	devour(t_philo *philo)
 {
@@ -28,9 +28,7 @@ static int	devour(t_philo *philo)
 	if (philo->sim->state != SIM_RUNNING)
 		return (release_locks(philo), -1);
 	philo->last_meal = now();
-	philo->next_meal = philo->last_meal \
-						+ philo->sim->time_to_eat * 2 \
-						+ philo->sim->time_to_eat / 4;
+	philo->next_meal = philo->last_meal + philo->sim->time_to_eat * 2 + 10;
 	philo->meal_eaten++;
 	if (
 		printf("%ld %d is eating\n", philo->last_meal - start, id) < 0

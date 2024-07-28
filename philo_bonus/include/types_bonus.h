@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   def.h                                              :+:      :+:    :+:   */
+/*   types_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:10:16 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/26 17:40:35 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:20:20 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEF_H
-# define DEF_H
+#ifndef TYPES_BONUS_H
+# define TYPES_BONUS_H
 
 # define FORKS_SEM "/forks_semaphore"
 # define PRINTER_SEM "/printer_semaphore"

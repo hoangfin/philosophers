@@ -6,12 +6,12 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:24:59 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/17 17:35:10 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:25:43 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "utility.h"
+#include "utils_bonus.h"
 
 static int	has_not_a_number(char **argv)
 {

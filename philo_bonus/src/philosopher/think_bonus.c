@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   release_locks.c                                    :+:      :+:    :+:   */
+/*   think.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 21:12:05 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 21:41:46 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/03 14:40:33 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "def.h"
+#include <unistd.h>
+#include "philo_bonus.h"
 
-void	release_locks(t_philo *philo)
+void	think(t_philo *philo)
 {
-	if (
-		pthread_mutex_unlock(philo->meal_mutex) != 0
-		|| pthread_mutex_unlock(philo->sim->state_mutex) != 0
-	)
-		exit(1);
+	print("is thinking", philo);
 }

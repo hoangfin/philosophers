@@ -6,12 +6,12 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:56:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/23 17:50:35 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:21:09 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "def.h"
+#include "types_bonus.h"
 
 t_sim_state	get_sim_state(t_sim *sim)
 {

@@ -15,27 +15,27 @@ VPATH :=	src \
 			src/simulation \
 			src/utility
 
-SOURCES :=	main.c \
+SOURCES :=	main_bonus.c \
 			\
-			acquire_locks.c \
-			eat.c \
-			ft_sleep.c \
-			init_philo.c \
-			philo_routine.c \
-			print.c \
-			release_locks.c \
-			think.c \
+			acquire_locks_bonus.c \
+			eat_bonus.c \
+			ft_sleep_bonus.c \
+			init_philo_bonus.c \
+			philo_routine_bonus.c \
+			print_bonus.c \
+			release_locks_bonus.c \
+			think_bonus.c \
 			\
-			destroy.c \
-			get_sim_state.c \
-			init.c \
-			set_sim_state.c \
-			start.c \
+			destroy_bonus.c \
+			get_sim_state_bonus.c \
+			init_bonus.c \
+			set_sim_state_bonus.c \
+			start_bonus.c \
 			\
-			ft_atol.c \
-			msleep.c \
-			now.c \
-			validate.c
+			ft_atol_bonus.c \
+			msleep_bonus.c \
+			now_bonus.c \
+			validate_bonus.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 

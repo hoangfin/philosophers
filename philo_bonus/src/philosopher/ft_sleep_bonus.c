@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   think.c                                            :+:      :+:    :+:   */
+/*   ft_sleep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 14:40:33 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 19:16:55 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/03 14:35:28 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <unistd.h>
-#include "philo.h"
+#include "philo_bonus.h"
+#include "utils_bonus.h"
 
-void	think(t_philo *philo)
+void	ft_sleep(t_philo *philo)
 {
-	print("is thinking", philo);
+	if (print("is sleeping", philo) != 0)
+		return ;
+	if (msleep(philo->sim->time_to_sleep) == -1)
+		exit(1);
 }

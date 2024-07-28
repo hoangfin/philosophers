@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sim.h                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 15:48:42 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/26 19:27:23 by hoatran          ###   ########.fr       */
+/*   Created: 2024/06/24 20:02:38 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/28 14:25:43 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIM_H
-# define SIM_H
+#include <stdlib.h>
+#include "sim_bonus.h"
+#include "utils_bonus.h"
 
-# define SIM_START_TIME 100
+int	main(int argc, char **argv)
+{
+	t_sim	sim;
 
-# include "def.h"
-
-t_sim_state	get_sim_state(t_sim *sim);
-int			init(t_sim *simulation, char **argv);
-int			start(t_sim *simulation);
-
-void		destroy(t_sim *simulation);
-void		set_sim_state(t_sim_state sim_state, t_sim *sim);
-
-#endif
+	if (validate(argc, argv + 1) == 0)
+		return (EXIT_FAILURE);
+	if (init(&sim, argv) == -1)
+		return (EXIT_FAILURE);
+	if (start(&sim) == -1)
+		return (destroy(&sim), EXIT_FAILURE);
+	destroy(&sim);
+	return (EXIT_SUCCESS);
+}

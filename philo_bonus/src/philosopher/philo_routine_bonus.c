@@ -6,16 +6,15 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 01:47:58 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 01:28:00 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include "sim.h"
-#include "philo.h"
-#include "utility.h"
+#include "sim_bonus.h"
+#include "philo_bonus.h"
+#include "utils_bonus.h"
 
 static void	philo_exit(int exit_status, t_sim *sim)
 {

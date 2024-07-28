@@ -6,14 +6,14 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 22:58:42 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 23:09:55 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "philo.h"
-#include "utility.h"
+#include "philo_bonus.h"
+#include "utils_bonus.h"
 
 int	print(const char *msg, t_philo *philo)
 {

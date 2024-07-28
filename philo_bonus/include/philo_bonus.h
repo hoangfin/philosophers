@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:11:54 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 21:14:31 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:19 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
-# include "def.h"
+# include "types_bonus.h"
 
 int		init_philo(t_philo *philo, int id, t_sim *sim);
 void	philo_routine(t_philo *philo);

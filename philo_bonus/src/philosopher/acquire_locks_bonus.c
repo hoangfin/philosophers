@@ -6,14 +6,14 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 20:55:44 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 21:23:33 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "philo.h"
-#include "utility.h"
+#include "philo_bonus.h"
+#include "utils_bonus.h"
 
 static int	is_dead(t_philo *philo)
 {

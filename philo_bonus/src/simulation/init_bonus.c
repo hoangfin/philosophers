@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 20:48:29 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "philo.h"
-#include "sim.h"
-#include "utility.h"
+#include "philo_bonus.h"
+#include "sim_bonus.h"
+#include "utils_bonus.h"
 
 static int	create_philos(t_sim *sim)
 {

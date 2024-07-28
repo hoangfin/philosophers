@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_sim_state.c                                    :+:      :+:    :+:   */
+/*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 12:56:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/23 17:58:14 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/12 20:03:44 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "def.h"
+#include <stdlib.h>
+#include "philo_bonus.h"
 
-void	set_sim_state(t_sim_state sim_state, t_sim *sim)
+int	init_philo(t_philo *philo, int id, t_sim *sim)
 {
-	if (pthread_mutex_lock(sim->state_mutex) != 0)
-	{
-		write(2, "set_sim_state: pthread_mutex_lock\n", 34);
-		sim->state = SIM_ERROR;
-		return ;
-	}
-	sim->state = sim_state;
-	if (pthread_mutex_unlock(sim->state_mutex) != 0)
-	{
-		write(2, "set_sim_state: pthread_mutex_unlock\n", 36);
-		sim->state = SIM_ERROR;
-	}
+	philo->sim = sim;
+	philo->id = id;
+	philo->next_meal = 0;
+	philo->meal_mutex = malloc(sizeof(pthread_mutex_t));
+	if (
+		philo->meal_mutex == NULL
+		|| pthread_mutex_init(philo->meal_mutex, NULL) != 0
+	)
+		return (-1);
+	return (0);
 }

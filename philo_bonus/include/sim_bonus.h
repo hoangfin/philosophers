@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sleep.c                                         :+:      :+:    :+:   */
+/*   sim_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 14:35:28 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/27 20:29:12 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/12 15:48:42 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/28 14:21:49 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include "philo.h"
-#include "utility.h"
+#ifndef SIM_BONUS_H
+# define SIM_BONUS_H
 
-void	ft_sleep(t_philo *philo)
-{
-	if (print("is sleeping", philo) != 0)
-		return ;
-	if (msleep(philo->sim->time_to_sleep) == -1)
-		exit(1);
-}
+# define SIM_START_TIME 100
+
+# include "types_bonus.h"
+
+t_sim_state	get_sim_state(t_sim *sim);
+int			init(t_sim *simulation, char **argv);
+int			start(t_sim *simulation);
+
+void		destroy(t_sim *simulation);
+void		set_sim_state(t_sim_state sim_state, t_sim *sim);
+
+#endif

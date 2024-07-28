@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:31:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/25 23:02:14 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:22:18 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include "sim.h"
+#include "sim_bonus.h"
 
 static void	wait_all(t_sim *sim)
 {
