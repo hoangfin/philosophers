@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_philo_state.c                                  :+:      :+:    :+:   */
+/*   unlock.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 23:02:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/13 16:53:52 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/08 22:20:03 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/29 23:59:19 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "types.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include "utils.h"
 
-t_philo_state	get_philo_state(t_philo *philo)
+static size_t	ft_strlen(const char *s)
 {
-	t_philo_state	state;
+	size_t	length;
 
-	if (pthread_mutex_lock(philo->state_mutex) != 0)
-		return (PHILO_UNDEFINED);
-	state = philo->state;
-	if (pthread_mutex_unlock(philo->state_mutex) != 0)
-		return (PHILO_UNDEFINED);
-	return (state);
+	length = 0;
+	while (*s != '\0')
+	{
+		length++;
+		s++;
+	}
+	return (length);
+}
+
+void	unlock(pthread_mutex_t *mutex, const char *err_msg)
+{
+	if (pthread_mutex_unlock(mutex) != 0)
+	{
+		write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
+		write(STDERR_FILENO, "\n", 1);
+		exit(1);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 14:15:09 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:08:30 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	init(t_sim *sim, char **argv)
 		sim->meal_limit = (int)ft_atol(argv[5], NULL);
 	sim->monitor_thread = malloc(sizeof(pthread_t));
 	sim->state_mutex = malloc(sizeof(pthread_mutex_t));
-	sim->print_mutex = malloc(sizeof(pthread_mutex_t));
+	sim->printer_mutex = malloc(sizeof(pthread_mutex_t));
 	if (
 		sim->monitor_thread == NULL
 		|| sim->state_mutex == NULL
-		|| sim->print_mutex == NULL
+		|| sim->printer_mutex == NULL
 		|| pthread_mutex_init(sim->state_mutex, NULL) != 0
-		|| pthread_mutex_init(sim->print_mutex, NULL) != 0
+		|| pthread_mutex_init(sim->printer_mutex, NULL) != 0
 		|| create_forks(sim) < 0
 		|| create_philos(sim) < 0
 	)

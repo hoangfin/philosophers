@@ -6,59 +6,39 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 23:16:48 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/14 13:45:43 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 00:44:53 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include "simulation.h"
 #include "philosopher.h"
-#include "printer.h"
 #include "utils.h"
-
-static t_bool	is_dead(t_philo *philo, t_sim *sim)
-{
-	long	current_time;
-
-	if (pthread_mutex_lock(philo->meal_mutex) != 0)
-		return (print_error("Error: lock meal_mutex", sim), true);
-	current_time = now();
-	if (current_time == -1)
-	{
-		print_error("Error: Couldn't get current time", sim);
-		pthread_mutex_unlock(philo->meal_mutex);
-		return (true);
-	}
-	if (current_time - philo->last_meal >= sim->time_to_die)
-	{
-		if (set_philo_state(PHILO_DIED, philo) == -1)
-			print_error("Error: set_philo_state: PHILO_DIED", sim);
-		pthread_mutex_unlock(philo->meal_mutex);
-		return (true);
-	}
-	if (pthread_mutex_unlock(philo->meal_mutex) != 0)
-		return (print_error("Error: unlock meal_mutex", sim), true);
-	return (false);
-}
 
 static t_bool	has_a_dead_philo(t_sim *sim)
 {
-	int				i;
-	t_philo			*philo;
-	t_philo_state	state;
+	int		i;
+	t_philo	*philo;
 
 	i = 0;
 	while (i < sim->number_of_philos)
 	{
 		philo = sim->philos + i;
-		state = get_philo_state(philo);
-		if (state == PHILO_UNDEFINED)
-			return (print_error("Error: undefined philo state", sim), true);
-		if (state == PHILO_EATING || state == PHILO_SLEEPING)
-			return (false);
-		if (is_dead(philo, sim))
+		lock(philo->meal_mutex, "has_a_dead_philo: lock");
+		if (now() - philo->last_meal >= sim->time_to_die)
+		{
+			lock(philo->sim->state_mutex, "has_a_dead_philo: lock");
+			philo->sim->state = SIM_END;
+			unlock(philo->sim->state_mutex, "has_a_dead_philo: unlock");
+			unlock(philo->meal_mutex, "has_a_dead_philo: unlock");
+			lock(philo->sim->printer_mutex, "has_a_dead_philo: lock");
+			printf("%ld %d died\n", now() - philo->sim->start, philo->id);
+			unlock(philo->sim->printer_mutex, "has_a_dead_philo: unlock");
 			return (true);
+		}
+		unlock(philo->meal_mutex, "has_a_dead_philo: unlock");
 		i++;
 	}
 	return (false);
@@ -75,15 +55,18 @@ static t_bool	hit_meal_limit(t_sim *sim)
 	while (i < sim->number_of_philos)
 	{
 		philo = sim->philos + i;
-		if (pthread_mutex_lock(philo->meal_mutex) != 0)
-			return (print_error("Error: lock meal_mutex", sim), true);
-		if (philo->meal_eaten < sim->meal_limit)
-			return (pthread_mutex_unlock(philo->meal_mutex), false);
-		if (pthread_mutex_unlock(philo->meal_mutex) != 0)
-			return (print_error("Error: unlock meal_mutex", sim), true);
+		lock(philo->meal_mutex, "hit_meal_limit: lock");
+		if (philo->meal_count < sim->meal_limit)
+		{
+			unlock(philo->meal_mutex, "hit_meal_limit: unlock");
+			return (false);
+		}
+		unlock(philo->meal_mutex, "hit_meal_limit: unlock");
 		i++;
 	}
-	set_sim_state(SIM_END, sim);
+	lock(sim->state_mutex, "hit_meal_limit: lock");
+	sim->state = SIM_END;
+	unlock(sim->state_mutex, "hit_meal_limit: unlock");
 	return (true);
 }
 
@@ -96,6 +79,11 @@ void	*monitor_routine(void *arg)
 	{
 		if (has_a_dead_philo(sim) || hit_meal_limit(sim))
 			break ;
+		if (usleep(100) != 0)
+		{
+			write(STDERR_FILENO, "monitor_routine: usleep\n", 24);
+			exit(1);
+		}
 	}
 	return (NULL);
 }

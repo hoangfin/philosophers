@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher_routine.c                              :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:44:14 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/13 19:32:51 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/29 23:41:35 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "philosopher.h"
 #include "simulation.h"
 #include "utils.h"
 
-void	*philosopher_routine(void *arg)
+void	*philo_routine(void *arg)
 {
 	t_philo *const	philo = (t_philo *) arg;
 
-	if (philo->id % 2 == 0 && msleep(1) == -1)
-		return (NULL);
-	while (get_sim_state(philo->sim) == SIM_RUNNING)
+	if (philo->id % 2 == 0)
+		msleep(1);
+	while (1)
 	{
-		if (think(philo) == -1 || eat(philo) == -1 || ft_sleep(philo) == -1)
+		lock(philo->sim->state_mutex, "philo_routine: lock");
+		if (philo->sim->state != SIM_RUNNING)
+		{
+			unlock(philo->sim->state_mutex, "philo_routine: unlock");
 			break ;
+		}
+		unlock(philo->sim->state_mutex, "philo_routine: unlock");
+		think(philo);
+		eat(philo);
+		ft_sleep(philo);
 	}
 	return (NULL);
 }

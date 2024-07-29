@@ -1,20 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer.h                                          :+:      :+:    :+:   */
+/*   lock.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 15:39:09 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/13 16:56:10 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/08 22:20:03 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/29 23:59:13 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTER_H
-# define PRINTER_H
+#include <stdlib.h>
+#include <unistd.h>
+#include "utils.h"
 
-# include "types.h"
+static size_t	ft_strlen(const char *s)
+{
+	size_t	length;
 
-void	print_error(const char *err_msg, t_sim *sim);
+	length = 0;
+	while (*s != '\0')
+	{
+		length++;
+		s++;
+	}
+	return (length);
+}
 
-#endif
+void	lock(pthread_mutex_t *mutex, const char *err_msg)
+{
+	if (pthread_mutex_lock(mutex) != 0)
+	{
+		write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
+		write(STDERR_FILENO, "\n", 1);
+		exit(1);
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 00:37:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/13 19:32:33 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 00:01:41 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,13 @@ int	start(t_sim *sim)
 	{
 		thread = sim->philos[sim->number_of_threads].thread;
 		philo = sim->philos + sim->number_of_threads;
-		if (pthread_create(thread, NULL, philosopher_routine, philo) != 0)
-			return (set_sim_state(SIM_ERROR, sim), -1);
+		if (pthread_create(thread, NULL, philo_routine, philo) != 0)
+		{
+			lock(sim->state_mutex, "start: lock: state_mutex");
+			sim->state = SIM_ERROR;
+			unlock(sim->state_mutex, "start: unlock: state_mutex");
+			return (-1);
+		}
 		sim->number_of_threads++;
 	}
 	return (0);

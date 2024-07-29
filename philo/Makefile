@@ -21,28 +21,23 @@ SOURCES :=	main.c \
 			\
 			eat.c \
 			ft_sleep.c \
-			get_philo_state.c \
 			init_philosopher.c \
-			set_philo_state.c \
+			print_philo_state.c \
 			think.c \
 			\
-			print_error.c \
-			\
 			monitor_routine.c \
-			philosopher_routine.c \
+			philo_routine.c \
 			\
 			destroy.c \
-			get_sim_state.c \
 			init.c \
-			set_sim_state.c \
 			start.c \
 			wait.c \
 			\
-			acquire_locks.c \
 			ft_atol.c \
+			lock.c \
 			msleep.c \
 			now.c \
-			release_locks.c \
+			unlock.c \
 			validate.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)

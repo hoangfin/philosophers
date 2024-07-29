@@ -6,10 +6,11 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:36:43 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/12 17:27:57 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/29 23:59:42 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/time.h>
 
@@ -23,6 +24,9 @@ long	now(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) < 0)
-		return (-1);
+	{
+		write(2, "now: gettimeofday\n", 18);
+		exit(1);
+	}
 	return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
 }
