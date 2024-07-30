@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:16:02 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 23:59:32 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 21:56:45 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,25 @@
  * @returns 0 on success. On error, -1 is returned, with errno set to
  * indicate the error.
  */
-void	msleep(long duration)
+void	msleep(long duration, t_sim *sim)
 {
 	const long	start = now();
-	long		current_time;
 
-	current_time = now();
-	while (current_time - start < duration)
+	while (1)
 	{
+		if (sim != NULL)
+		{
+			lock(sim->state_mutex, "msleep: lock");
+			if (sim->state != SIM_RUNNING)
+				return (unlock(sim->state_mutex, "msleep: unlock"));
+			unlock(sim->state_mutex, "msleep: unlock");
+		}
+		if (now() - start >= duration)
+			return ;
 		if (usleep(500) != 0)
 		{
 			write(2, "msleep: usleep\n", 15);
 			exit(1);
 		}
-		current_time = now();
 	}
 }

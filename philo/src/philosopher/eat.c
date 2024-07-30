@@ -6,10 +6,11 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 23:47:54 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 22:01:17 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "simulation.h"
 #include "philosopher.h"
 #include "utils.h"
 
@@ -33,7 +34,7 @@ void	eat(t_philo *philo)
 	status = print_philo_state("is eating", philo);
 	unlock(philo->meal_mutex, "eat: unlock: meal_mutex");
 	if (status == 0)
-		msleep(philo->sim->time_to_eat);
+		msleep(philo->sim->time_to_eat, philo->sim);
 	unlock(philo->right_fork, "eat: unlock: right_fork mutex");
 	unlock(philo->left_fork, "eat: unlock: left_fork mutex");
 }

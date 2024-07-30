@@ -30,12 +30,12 @@ SOURCES :=	main.c \
 			\
 			destroy.c \
 			init.c \
+			msleep.c \
 			start.c \
 			wait.c \
 			\
 			ft_atol.c \
 			lock.c \
-			msleep.c \
 			now.c \
 			unlock.c \
 			validate.c

@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:44:14 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 23:41:35 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 21:59:25 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*philo_routine(void *arg)
 	t_philo *const	philo = (t_philo *) arg;
 
 	if (philo->id % 2 == 0)
-		msleep(1);
+		msleep(1, NULL);
 	while (1)
 	{
 		lock(philo->sim->state_mutex, "philo_routine: lock");
