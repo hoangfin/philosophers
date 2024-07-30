@@ -1,40 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msleep.c                                           :+:      :+:    :+:   */
+/*   msleep_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:16:02 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:25:43 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 22:20:25 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <unistd.h>
+#include "types_bonus.h"
 #include "utils_bonus.h"
 
 /**
  * Suspends execution of the calling thread for (at least) the specified
  * duration in milliseconds.
- *
- * @returns 0 on success. On error, -1 is returned, with errno set to
- * indicate the error.
  */
-int	msleep(long duration)
+void	msleep(long duration, t_sim *sim)
 {
 	const long	start = now();
-	long		current_time;
 
-	current_time = now();
-	if (start == -1 || current_time == -1)
-		return (-1);
-	while (current_time - start < duration)
+	while (1)
 	{
-		if (usleep(500) == -1)
-			return (-1);
-		current_time = now();
-		if (current_time == -1)
-			return (-1);
+		if (sim != NULL)
+		{
+			lock(sim->state_mutex, "msleep: lock");
+			if (sim->state != SIM_RUNNING)
+				return (unlock(sim->state_mutex, "msleep: unlock"));
+			unlock(sim->state_mutex, "msleep: unlock");
+		}
+		if (now() - start >= duration)
+			return ;
+		if (usleep(500) != 0)
+		{
+			write(2, "msleep: usleep\n", 15);
+			exit(1);
+		}
 	}
-	return (0);
 }

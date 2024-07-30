@@ -29,12 +29,14 @@ SOURCES :=	main_bonus.c \
 			destroy_bonus.c \
 			get_sim_state_bonus.c \
 			init_bonus.c \
+			msleep_bonus.c \
 			set_sim_state_bonus.c \
 			start_bonus.c \
 			\
 			ft_atol_bonus.c \
-			msleep_bonus.c \
+			lock_bonus.c \
 			now_bonus.c \
+			unlock_bonus.c \
 			validate_bonus.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)

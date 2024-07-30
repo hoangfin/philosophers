@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sleep_bonus.c                                   :+:      :+:    :+:   */
+/*   unlock_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 14:35:28 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/30 22:40:39 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/08 22:20:03 by hoatran           #+#    #+#             */
+/*   Updated: 2024/07/30 22:44:18 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sim_bonus.h"
-#include "philo_bonus.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include "utils_bonus.h"
 
-void	ft_sleep(t_philo *philo)
+static size_t	ft_strlen(const char *s)
 {
-	if (print("is sleeping", philo) != 0)
-		return ;
-	msleep(philo->sim->time_to_sleep, philo->sim);
+	size_t	length;
+
+	length = 0;
+	while (*s != '\0')
+	{
+		length++;
+		s++;
+	}
+	return (length);
+}
+
+void	unlock(pthread_mutex_t *mutex, const char *err_msg)
+{
+	if (pthread_mutex_unlock(mutex) != 0)
+	{
+		write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
+		write(STDERR_FILENO, "\n", 1);
+		exit(1);
+	}
 }

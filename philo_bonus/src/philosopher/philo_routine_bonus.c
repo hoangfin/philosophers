@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   philo_routine_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 01:47:58 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/30 22:43:00 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ void	philo_routine(t_philo *philo)
 
 	philo->sim->start = philo->sim->start + SIM_START_TIME;
 	philo->last_meal = philo->sim->start;
-	if (elapsed_time < 0 || msleep(SIM_START_TIME - elapsed_time) != 0)
-		philo_exit(1, philo->sim);
+	msleep(SIM_START_TIME - elapsed_time, NULL);
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, philo) != 0)
 		philo_exit(1, philo->sim);
 	while (1)
