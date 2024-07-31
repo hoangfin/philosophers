@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:26:45 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/07/31 17:52:29 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,8 +42,6 @@ static int	create_semaphores(t_sim *sim)
 {
 	sem_unlink(FORKS_SEM);
 	sem_unlink(PRINTER_SEM);
-	sem_close(sim->forks);
-	sem_close(sim->printer);
 	sim->forks = sem_open(FORKS_SEM, O_CREAT, 0600, sim->number_of_philos);
 	sim->printer = sem_open(PRINTER_SEM, O_CREAT, 0600, 1);
 	if (sim->forks == SEM_FAILED || sim->printer == SEM_FAILED)
