@@ -41,9 +41,11 @@ SOURCES :=	main_bonus.c \
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
 
 all: $(NAME)
+
+bonus: $(NAME)
 
 $(NAME): $(BUILD_DIR) $(OBJECTS)
 	@$(CC) $(CFLAG) $(OBJECTS) -o $@
