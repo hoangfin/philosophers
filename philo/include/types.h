@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:10:16 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 19:08:30 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/01 01:33:03 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 	int				id;
 	int				meal_count;
 	long			last_meal;
+	long			next_meal;
 }	t_philo;
 
 typedef enum e_sim_state
