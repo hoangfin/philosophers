@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_sim_state.c                                    :+:      :+:    :+:   */
+/*   unlock_sem_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 12:56:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:21:09 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/08 22:20:03 by hoatran           #+#    #+#             */
+/*   Updated: 2024/08/02 21:45:04 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <unistd.h>
-#include "types_bonus.h"
+#include "utils_bonus.h"
 
-t_sim_state	get_sim_state(t_sim *sim)
+static size_t	ft_strlen(const char *s)
 {
-	t_sim_state	state;
+	size_t	length;
 
-	if (pthread_mutex_lock(sim->state_mutex) != 0)
+	length = 0;
+	while (*s != '\0')
 	{
-		write(2, "get_sim_state: pthread_mutex_lock\n", 34);
-		sim->state = SIM_ERROR;
-		return (SIM_ERROR);
+		length++;
+		s++;
 	}
-	state = sim->state;
-	if (pthread_mutex_unlock(sim->state_mutex) != 0)
+	return (length);
+}
+
+void	unlock_sem(sem_t *semaphore, const char *err_msg)
+{
+	if (sem_post(semaphore) != 0)
 	{
-		write(2, "get_sim_state: pthread_mutex_unlock\n", 36);
-		sim->state = SIM_ERROR;
-		return (SIM_ERROR);
+		write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
+		write(STDERR_FILENO, "\n", 1);
+		exit(1);
 	}
-	return (state);
 }

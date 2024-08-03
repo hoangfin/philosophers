@@ -6,16 +6,40 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 19:08:30 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/03 00:43:57 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "simulation.h"
-#include "philosopher.h"
+#include "sim.h"
 #include "utils.h"
+
+static int	init_philo(t_philo *philo, int id, t_sim *sim)
+{
+	philo->sim = sim;
+	philo->id = id;
+	philo->thread = (pthread_t *)malloc(sizeof(pthread_t));
+	if (philo->thread == NULL)
+		return (-1);
+	if (philo->id % 2 == 1)
+	{
+		philo->left_fork = sim->forks[id - 1];
+		philo->right_fork = sim->forks[id % sim->number_of_forks];
+	}
+	else
+	{
+		philo->left_fork = sim->forks[id % sim->number_of_forks];
+		philo->right_fork = sim->forks[id - 1];
+	}
+	philo->meal_mutex = malloc(sizeof(pthread_mutex_t));
+	if (philo->meal_mutex == NULL)
+		return (-1);
+	if (pthread_mutex_init(philo->meal_mutex, NULL) != 0)
+		return (-1);
+	return (0);
+}
 
 static int	create_philos(t_sim *sim)
 {
@@ -24,13 +48,13 @@ static int	create_philos(t_sim *sim)
 
 	sim->philos = (t_philo *)malloc(sim->number_of_philos * sizeof(t_philo));
 	if (sim->philos == NULL)
-		return (write(2, "malloc: Can not allocate memory\n", 32), -1);
+		return (write(2, "create_philos: malloc: sim->philos\n", 35), -1);
 	memset(sim->philos, 0, sim->number_of_philos * sizeof(t_philo));
 	i = 0;
 	while (i < sim->number_of_philos)
 	{
 		philo = sim->philos + i;
-		if (init_philosopher(philo, i + 1, sim) == -1)
+		if (init_philo(philo, i + 1, sim) != 0)
 			return (-1);
 		i++;
 	}
@@ -43,13 +67,15 @@ static int	create_forks(t_sim *sim)
 
 	sim->forks = malloc(sim->number_of_philos * sizeof(pthread_mutex_t *));
 	if (sim->forks == NULL)
-		return (write(2, "malloc: Can not allocate memory\n", 32), 12);
+		return (write(2, "create_forks: malloc: sim->forks\n", 33), -1);
 	sim->number_of_forks = 0;
 	while (sim->number_of_forks < sim->number_of_philos)
 	{
 		fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-		if (fork == NULL || pthread_mutex_init(fork, NULL) != 0)
+		if (fork == NULL)
 			return (-1);
+		if (pthread_mutex_init(fork, NULL) != 0)
+			return (free(fork), -1);
 		sim->forks[sim->number_of_forks] = fork;
 		sim->number_of_forks++;
 	}

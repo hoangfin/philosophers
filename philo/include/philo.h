@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   release_locks.c                                    :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 21:12:05 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:21:09 by hoatran          ###   ########.fr       */
+/*   Created: 2024/06/24 20:11:54 by hoatran           #+#    #+#             */
+/*   Updated: 2024/08/02 14:34:52 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "types_bonus.h"
+#ifndef PHILO_H
+# define PHILO_H
 
-void	release_locks(t_philo *philo)
-{
-	if (
-		pthread_mutex_unlock(philo->meal_mutex) != 0
-		|| pthread_mutex_unlock(philo->sim->state_mutex) != 0
-	)
-		exit(1);
-}
+# include "types.h"
+
+void	think(t_philo *philo);
+void	eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+
+#endif

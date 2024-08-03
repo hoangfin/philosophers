@@ -21,8 +21,6 @@ SOURCES :=	main.c \
 			\
 			eat.c \
 			ft_sleep.c \
-			init_philosopher.c \
-			print_philo_state.c \
 			think.c \
 			\
 			monitor_routine.c \
@@ -30,14 +28,14 @@ SOURCES :=	main.c \
 			\
 			destroy.c \
 			init.c \
+			lock.c \
 			msleep.c \
+			now.c \
+			print.c \
 			start.c \
-			wait.c \
+			unlock.c \
 			\
 			ft_atol.c \
-			lock.c \
-			now.c \
-			unlock.c \
 			validate.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)

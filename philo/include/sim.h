@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   sim.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 20:11:54 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 23:39:07 by hoatran          ###   ########.fr       */
+/*   Created: 2024/07/12 15:48:42 by hoatran           #+#    #+#             */
+/*   Updated: 2024/08/02 18:54:30 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#ifndef SIM_H
+# define SIM_H
 
 # include "types.h"
 
-int		init_philosopher(t_philo *philo, int id, t_sim	*sim);
-void	think(t_philo *philo);
-void	eat(t_philo *philo);
-void	ft_sleep(t_philo *philo);
-int		print_philo_state(const char *msg, t_philo *philo);
+int		init(t_sim *simulation, char **argv);
+int		start(t_sim *simulation);
+int		destroy(t_sim *simulation);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:02:38 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:25:43 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/03 16:03:15 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	main(int argc, char **argv)
 {
 	t_sim	sim;
 
-	if (validate(argc, argv + 1) == 0)
+	if (
+		validate(argc, argv + 1) == 0
+		|| init(&sim, argv + 1) != 0
+		|| start(&sim) != 0
+		|| destroy(&sim) != 0
+	)
 		return (EXIT_FAILURE);
-	if (init(&sim, argv) == -1)
-		return (EXIT_FAILURE);
-	if (start(&sim) == -1)
-		return (destroy(&sim), EXIT_FAILURE);
-	destroy(&sim);
 	return (EXIT_SUCCESS);
 }

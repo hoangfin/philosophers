@@ -17,26 +17,24 @@ VPATH :=	src \
 
 SOURCES :=	main_bonus.c \
 			\
-			acquire_locks_bonus.c \
 			eat_bonus.c \
 			ft_sleep_bonus.c \
-			init_philo_bonus.c \
+			monitor_routine_bonus.c \
 			philo_routine_bonus.c \
-			print_bonus.c \
-			release_locks_bonus.c \
 			think_bonus.c \
 			\
 			destroy_bonus.c \
-			get_sim_state_bonus.c \
 			init_bonus.c \
-			msleep_bonus.c \
-			set_sim_state_bonus.c \
 			start_bonus.c \
 			\
 			ft_atol_bonus.c \
 			lock_bonus.c \
+			lock_sem_bonus.c \
+			msleep_bonus.c \
 			now_bonus.c \
+			print_bonus.c \
 			unlock_bonus.c \
+			unlock_sem_bonus.c \
 			validate_bonus.c
 
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)

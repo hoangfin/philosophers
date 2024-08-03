@@ -6,12 +6,14 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:10:16 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/01 01:33:03 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:22:19 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+# define TOTAL_THREAD_CREATION_TIME_MS 100
 
 # include <pthread.h>
 

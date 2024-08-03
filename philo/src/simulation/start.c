@@ -6,32 +6,35 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 00:37:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/30 00:01:41 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/02 19:45:50 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
-#include "simulation.h"
+#include "sim.h"
 #include "routine.h"
 #include "utils.h"
 
-static int	set_start(t_sim *sim)
+static int	launch_monitor_thread(t_sim *sim)
 {
-	int	i;
+	int		i;
+	t_philo	*philo;
 
-	sim->state = SIM_RUNNING;
-	sim->start = now();
-	if (sim->start == -1)
-	{
-		write(2, "Error: Couldn't get current time\n", 33);
-		return (-1);
-	}
+	sim->start = now() + TOTAL_THREAD_CREATION_TIME_MS;
 	i = 0;
 	while (i < sim->number_of_philos)
 	{
-		sim->philos[i].last_meal = sim->start;
+		philo = sim->philos + i;
+		philo->last_meal = sim->start;
 		i++;
+	}
+	sim->state = SIM_RUNNING;
+	if (pthread_create(sim->monitor_thread, NULL, monitor_routine, sim) != 0)
+	{
+		write(STDERR_FILENO, "launch_monitor_thread: ", 23);
+		write(STDERR_FILENO, "pthread_create: sim->monitor_thread\n", 36);
+		return (-1);
 	}
 	return (0);
 }
@@ -41,10 +44,8 @@ int	start(t_sim *sim)
 	pthread_t	*thread;
 	t_philo		*philo;
 
-	if (set_start(sim) == -1)
+	if (launch_monitor_thread(sim) != 0)
 		return (-1);
-	if (pthread_create(sim->monitor_thread, NULL, monitor_routine, sim) != 0)
-		return (write(2, "Error: Failed to create monitor thread\n", 39), -1);
 	sim->number_of_threads = 0;
 	while (sim->number_of_threads < sim->number_of_philos)
 	{

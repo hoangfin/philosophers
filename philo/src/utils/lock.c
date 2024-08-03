@@ -6,13 +6,13 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 22:20:03 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/29 23:59:13 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/02 09:59:23 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "utils.h"
+#include <pthread.h>
 
 static size_t	ft_strlen(const char *s)
 {

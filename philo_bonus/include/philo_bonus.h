@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:11:54 by hoatran           #+#    #+#             */
-/*   Updated: 2024/07/28 14:26:19 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/03 18:48:50 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 
 # include "types_bonus.h"
 
-int		init_philo(t_philo *philo, int id, t_sim *sim);
 void	philo_routine(t_philo *philo);
-int		print(const char *msg, t_philo *philo);
-int		acquire_locks(t_philo *philo);
-
-void	release_locks(t_philo *philo);
+void	*monitor_routine(void *arg);
 void	think(t_philo *philo);
 void	eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
+
 #endif
