@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/05 08:30:45 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:13:08 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	eat(t_philo *philo)
 	if (philo->sim->number_of_philos == 1)
 		return (eat_with_one_fork(philo));
 	if (philo->id % 2 == 0 && philo->next_meal == 0)
-		msleep(philo->sim->time_to_eat / 2, philo->sim->time_to_eat / 2);
+		msleep(philo->sim->time_to_eat / 2, philo->sim->time_to_die);
 	delay = philo->next_meal - now();
 	if (philo->sim->number_of_philos % 2 == 1 && delay > 0)
 		msleep(delay, delay);
