@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 01:47:58 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/03 18:53:24 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/08 19:08:47 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static void	philo_exit(int exit_status, t_sim *sim)
 		free(sim->philos[i].meal_mutex);
 		i++;
 	}
+	sem_unlink(FORKS_SEM);
+	sem_unlink(PRINTER_SEM);
+	sem_close(sim->forks);
+	sem_close(sim->printer_sem);
 	free(sim->philos);
 	pthread_mutex_destroy(sim->state_mutex);
 	free(sim->state_mutex);
