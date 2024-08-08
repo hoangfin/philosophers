@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/05 19:12:55 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:32:08 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	eat(t_philo *philo)
 	philo->last_meal = now();
 	philo->next_meal = philo->last_meal + philo->sim->time_to_eat * 2 + 1;
 	philo->meal_count++;
-	unlock(philo->meal_mutex, "eat: unlock: meal_mutex");
 	print(philo->id, "is eating", philo->sim);
+	unlock(philo->meal_mutex, "eat: unlock: meal_mutex");
 	msleep(philo->sim->time_to_eat, philo->sim->time_to_die);
 	unlock(philo->right_fork, "eat: unlock: right_fork mutex");
 	unlock(philo->left_fork, "eat: unlock: left_fork mutex");
