@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 23:16:48 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/08 17:37:01 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/12 14:32:44 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static t_bool	has_a_dead_philo(t_sim *sim)
 			printf("%ld %d died\n", now() - philo->sim->start, philo->id);
 			unlock(philo->sim->printer_mutex, "has_a_dead_philo: unlock");
 			unlock(philo->sim->state_mutex, "has_a_dead_philo: unlock");
+			unlock(philo->meal_mutex, "has_a_dead_philo: unlock");
 			return (true);
 		}
 		unlock(philo->meal_mutex, "has_a_dead_philo: unlock");
