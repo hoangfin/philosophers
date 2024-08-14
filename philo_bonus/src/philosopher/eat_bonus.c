@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/05 19:13:08 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:25:31 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	eat_with_one_fork(t_philo *philo)
 	lock_sem(philo->sim->forks, "eat_with_one_fork: lock_sem: forks");
 	print(philo->id, "has taken a fork", philo->sim);
 	unlock_sem(philo->sim->forks, "eat_with_one_fork: unlock_sem: forks");
-	msleep(philo->sim->time_to_die, philo->sim->time_to_die);
+	msleep(philo->sim->time_to_die + 1, philo->sim->time_to_die + 1);
 }
 
 void	eat(t_philo *philo)

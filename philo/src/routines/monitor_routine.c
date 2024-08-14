@@ -6,12 +6,13 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 23:16:48 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/12 14:32:44 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/14 18:00:24 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "philo.h"
+#include <unistd.h>
+#include "sim.h"
 #include "utils.h"
 
 static t_bool	has_a_dead_philo(t_sim *sim)
@@ -73,11 +74,12 @@ void	*monitor_routine(void *arg)
 	const long		delay = sim->start - now();
 
 	if (delay > 0)
-		msleep(delay, delay);
+		msleep(delay, NULL);
 	while (1)
 	{
 		if (has_a_dead_philo(sim) || hit_meal_limit(sim))
 			break ;
+		usleep(1000);
 	}
 	return (NULL);
 }

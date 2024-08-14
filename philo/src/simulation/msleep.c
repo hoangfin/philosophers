@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:16:02 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/02 09:50:30 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/14 23:21:25 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,26 @@
  * Suspends execution of the calling thread for (at least) the specified
  * duration in milliseconds.
  */
-void	msleep(long duration, long timeout)
+void	msleep(long duration, t_sim *sim)
 {
-	const long	start = now();
-	long		elapsed_time;
+	const long	end = now() + duration;
 
-	elapsed_time = now() - start;
-	while (elapsed_time < duration && elapsed_time < timeout)
+	while (now() < end)
 	{
+		if (sim != NULL)
+		{
+			lock(sim->state_mutex, "msleep: lock: state_mutex");
+			if (sim->state != SIM_RUNNING)
+			{
+				unlock(sim->state_mutex, "msleep: unlock: state_mutex");
+				return ;
+			}
+			unlock(sim->state_mutex, "msleep: unlock: state_mutex");
+		}
 		if (usleep(500) != 0)
 		{
 			write(STDERR_FILENO, "msleep: usleep\n", 15);
 			exit(1);
 		}
-		elapsed_time = now() - start;
 	}
 }

@@ -6,11 +6,12 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:44:14 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/02 20:00:12 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/14 17:54:07 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "sim.h"
 #include "philo.h"
 #include "utils.h"
 
@@ -20,7 +21,7 @@ void	*philo_routine(void *arg)
 	const long		delay = philo->sim->start - now();
 
 	if (delay > 0)
-		msleep(delay, delay);
+		msleep(delay, NULL);
 	while (1)
 	{
 		lock(philo->sim->state_mutex, "philo_routine: lock");

@@ -6,10 +6,11 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:35:53 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/08 16:32:08 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/14 17:05:42 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sim.h"
 #include "utils.h"
 
 static void	eat_with_one_fork(t_philo *philo)
@@ -17,7 +18,7 @@ static void	eat_with_one_fork(t_philo *philo)
 	lock(philo->left_fork, "eat_with_one_fork: lock: left_fork");
 	print(philo->id, "has taken a fork", philo->sim);
 	unlock(philo->left_fork, "eat_with_one_fork: unlock: left_fork");
-	msleep(philo->sim->time_to_die, philo->sim->time_to_die);
+	msleep(philo->sim->time_to_die + 1, philo->sim);
 }
 
 void	eat(t_philo *philo)
@@ -27,10 +28,10 @@ void	eat(t_philo *philo)
 	if (philo->sim->number_of_forks == 1)
 		return (eat_with_one_fork(philo));
 	if (philo->id % 2 == 0 && philo->next_meal == 0)
-		msleep(philo->sim->time_to_eat / 2, philo->sim->time_to_die);
+		msleep(philo->sim->time_to_eat / 2, philo->sim);
 	delay = philo->next_meal - now();
 	if (philo->sim->number_of_philos % 2 == 1 && delay > 0)
-		msleep(delay, delay);
+		msleep(delay, philo->sim);
 	lock(philo->left_fork, "eat: lock: left_fork mutex");
 	print(philo->id, "has taken a fork", philo->sim);
 	lock(philo->right_fork, "eat: lock: right_fork mutex");
@@ -41,7 +42,7 @@ void	eat(t_philo *philo)
 	philo->meal_count++;
 	print(philo->id, "is eating", philo->sim);
 	unlock(philo->meal_mutex, "eat: unlock: meal_mutex");
-	msleep(philo->sim->time_to_eat, philo->sim->time_to_die);
+	msleep(philo->sim->time_to_eat, philo->sim);
 	unlock(philo->right_fork, "eat: unlock: right_fork mutex");
 	unlock(philo->left_fork, "eat: unlock: left_fork mutex");
 }
