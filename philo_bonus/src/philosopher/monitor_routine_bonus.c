@@ -6,24 +6,27 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 01:47:58 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/03 18:51:21 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/15 20:47:00 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "philo_bonus.h"
 #include "utils_bonus.h"
 
-static int	is_philo_dead(long last_meal, t_philo *philo)
+static int	is_philo_dead(t_philo *philo)
 {
 	t_sim *const	sim = philo->sim;
 
-	if (now() - last_meal >= sim->time_to_die)
+	lock_sem(philo->meal_sem, "is_philo_dead: lock meal_sem");
+	if (now() - philo->last_meal >= sim->time_to_die)
 	{
-		lock(sim->state_mutex, "is_philo_dead: lock: state_mutex");
-		sim->state = SIM_END_BY_PHILO_DEATH;
-		unlock(sim->state_mutex, "is_philo_dead: unlock: state_mutex");
+		lock_sem(philo->state_sem, "is_philo_dead: lock state_sem");
+		philo->is_dead = 1;
+		unlock_sem(philo->state_sem, "is_philo_dead: unlock state_sem");
+		unlock_sem(philo->meal_sem, "is_philo_dead: unlock meal_sem");
 		lock_sem(sim->printer_sem, "is_philo_dead: lock_sem: printer_sem");
 		if (printf("%ld %d died\n", now() - sim->start, philo->id) < 0)
 		{
@@ -32,18 +35,24 @@ static int	is_philo_dead(long last_meal, t_philo *philo)
 		}
 		return (1);
 	}
+	unlock_sem(philo->meal_sem, "is_philo_dead: unlock meal_sem");
 	return (0);
 }
 
-static int	hit_meal_limit(int meal_count, t_sim *sim)
+static int	hit_meal_limit(t_philo *philo)
 {
-	if (sim->meal_limit == -1)
+	if (philo->sim->meal_limit == -1)
 		return (0);
-	if (meal_count < sim->meal_limit)
+	lock_sem(philo->meal_sem, "hit_meal_limit: lock meal_sem");
+	if (philo->meal_count < philo->sim->meal_limit)
+	{
+		unlock_sem(philo->meal_sem, "hit_meal_limit: unlock meal_sem");
 		return (0);
-	lock(sim->state_mutex, "hit_meal_limit: lock: state_mutex");
-	sim->state = SIM_END;
-	unlock(sim->state_mutex, "hit_meal_limit: unlock: state_mutex");
+	}
+	lock_sem(philo->state_sem, "hit_meal_limit: lock state_sem");
+	philo->has_enough_meal = 1;
+	unlock_sem(philo->state_sem, "hit_meal_limit: unlock state_sem");
+	unlock_sem(philo->meal_sem, "hit_meal_limit: unlock meal_sem");
 	return (1);
 }
 
@@ -51,21 +60,12 @@ void	*monitor_routine(void *arg)
 {
 	t_philo *const	philo = (t_philo *)arg;
 	const long		delay = philo->sim->start - now();
-	long			last_meal;
-	int				meal_count;
 
 	if (delay > 0)
-		msleep(delay, delay);
+		msleep(delay, NULL);
 	while (1)
 	{
-		lock(philo->meal_mutex, "monitor_routine: lock: meal_mutex");
-		last_meal = philo->last_meal;
-		meal_count = philo->meal_count;
-		unlock(philo->meal_mutex, "monitor_routine: unlock: meal_mutex");
-		if (
-			is_philo_dead(last_meal, philo)
-			|| hit_meal_limit(meal_count, philo->sim)
-		)
+		if (is_philo_dead(philo) || hit_meal_limit(philo) )
 			break ;
 		if (usleep(1000) != 0)
 		{

@@ -20,6 +20,7 @@ SOURCES :=	main_bonus.c \
 			eat_bonus.c \
 			ft_sleep_bonus.c \
 			monitor_routine_bonus.c \
+			msleep_bonus.c \
 			philo_routine_bonus.c \
 			think_bonus.c \
 			\
@@ -28,12 +29,10 @@ SOURCES :=	main_bonus.c \
 			start_bonus.c \
 			\
 			ft_atol_bonus.c \
-			lock_bonus.c \
 			lock_sem_bonus.c \
-			msleep_bonus.c \
 			now_bonus.c \
+			set_name_bonus.c \
 			print_bonus.c \
-			unlock_bonus.c \
 			unlock_sem_bonus.c \
 			validate_bonus.c
 

@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:31:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/03 18:42:39 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/15 20:48:16 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include "sim_bonus.h"
+#include "utils_bonus.h"
 
 static int	wait_all(t_sim *sim)
 {
@@ -55,9 +56,12 @@ static int	delete_philos(t_sim *sim)
 	while (i < sim->number_of_philos)
 	{
 		philo = sim->philos[i];
-		if (pthread_mutex_destroy(philo.meal_mutex) != 0)
-			status = -1;
-		free(philo.meal_mutex);
+		set_name(sim->sem_name_buf, "/state_sem_", philo.id);
+		sem_unlink(sim->sem_name_buf);
+		set_name(sim->sem_name_buf, "/meal_sem_", philo.id);
+		sem_unlink(sim->sem_name_buf);
+		sem_close(philo.meal_sem);
+		sem_close(philo.state_sem);
 		i++;
 	}
 	free(sim->philos);
@@ -66,7 +70,7 @@ static int	delete_philos(t_sim *sim)
 
 int	destroy(t_sim *sim)
 {
-	int	statuses[7];
+	int	statuses[6];
 
 	statuses[0] = wait_all(sim);
 	statuses[1] = sem_unlink(FORKS_SEM);
@@ -74,8 +78,6 @@ int	destroy(t_sim *sim)
 	statuses[3] = sem_close(sim->forks);
 	statuses[4] = sem_close(sim->printer_sem);
 	statuses[5] = delete_philos(sim);
-	statuses[6] = pthread_mutex_destroy(sim->state_mutex);
-	free(sim->state_mutex);
 	if (
 		statuses[0] != 0
 		|| statuses[1] != 0
@@ -83,7 +85,6 @@ int	destroy(t_sim *sim)
 		|| statuses[3] != 0
 		|| statuses[4] != 0
 		|| statuses[5] != 0
-		|| statuses[6] != 0
 	)
 		return (-1);
 	return (0);

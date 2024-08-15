@@ -6,13 +6,13 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:40:33 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/03 14:10:19 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/13 23:22:24 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils_bonus.h"
+#include "philo_bonus.h"
 
 void	think(t_philo *philo)
 {
-	print(philo->id, "is thinking", philo->sim);
+	print("is thinking", philo);
 }

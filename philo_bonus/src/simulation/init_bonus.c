@@ -6,10 +6,11 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/03 18:54:56 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:31:34 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,15 +20,20 @@
 
 static int	init_philo(t_philo *philo, int id, t_sim *sim)
 {
+	char	*name;
+
 	philo->sim = sim;
 	philo->id = id;
-	philo->next_meal = 0;
-	philo->meal_mutex = malloc(sizeof(pthread_mutex_t));
-	if (
-		philo->meal_mutex == NULL
-		|| pthread_mutex_init(philo->meal_mutex, NULL) != 0
-	)
+	name = sim->sem_name_buf;
+	set_name(name, "/state_sem_", id);
+	philo->state_sem = sem_open(name, O_CREAT, 0600, 1);
+	set_name(name, "/meal_sem_", id);
+	philo->meal_sem = sem_open(name, O_CREAT, 0600, 1);
+	if (philo->state_sem == SEM_FAILED || philo->meal_sem == SEM_FAILED)
+	{
+		write(STDERR_FILENO, "init_philo: sem_open\n", 21);
 		return (-1);
+	}
 	return (0);
 }
 
@@ -72,13 +78,7 @@ int	init(t_sim *sim, char **argv)
 	sim->meal_limit = -1;
 	if (argv[4] != NULL)
 		sim->meal_limit = (int)ft_atol(argv[4], NULL);
-	sim->state_mutex = malloc(sizeof(pthread_mutex_t));
-	if (
-		sim->state_mutex == NULL
-		|| pthread_mutex_init(sim->state_mutex, NULL) != 0
-		|| create_semaphores(sim) != 0
-		|| create_philos(sim) != 0
-	)
+	if (create_semaphores(sim) != 0 || create_philos(sim) != 0)
 		return (destroy(sim), -1);
 	return (0);
 }

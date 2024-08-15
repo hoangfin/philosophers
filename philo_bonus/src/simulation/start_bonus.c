@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 00:37:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/07 17:47:57 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:54:29 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	start(t_sim *sim)
 	const int	n = sim->number_of_philos;
 	t_philo		*philo;
 
-	sim->start = now() + CREATION_TIME_PER_PROCESS_MS * n * 0.1;
+	sim->start = now() + CREATION_TIME_PER_PROCESS_MS * n * 0.3;
 	sim->number_of_pids = 0;
 	while (sim->number_of_pids < sim->number_of_philos)
 	{
