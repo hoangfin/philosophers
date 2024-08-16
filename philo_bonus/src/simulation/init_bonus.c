@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:27:18 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/15 22:31:34 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/16 17:03:11 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static int	create_philos(t_sim *sim)
 
 static int	create_semaphores(t_sim *sim)
 {
-	sem_unlink(FORKS_SEM);
-	sem_unlink(PRINTER_SEM);
+	// sem_unlink(FORKS_SEM);
+	// sem_unlink(PRINTER_SEM);
 	sim->forks = sem_open(FORKS_SEM, O_CREAT, 0600, sim->number_of_philos);
 	sim->printer_sem = sem_open(PRINTER_SEM, O_CREAT, 0600, 1);
 	if (sim->forks == SEM_FAILED || sim->printer_sem == SEM_FAILED)

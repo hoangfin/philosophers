@@ -6,13 +6,15 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:31:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/15 20:48:16 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/16 17:08:39 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <errno.h>
 #include "sim_bonus.h"
 #include "utils_bonus.h"
 
@@ -56,12 +58,16 @@ static int	delete_philos(t_sim *sim)
 	while (i < sim->number_of_philos)
 	{
 		philo = sim->philos[i];
+		if (sem_close(philo.meal_sem) != 0)
+			status = -1;
+		if (sem_close(philo.state_sem) != 0)
+			status = -1;
 		set_name(sim->sem_name_buf, "/state_sem_", philo.id);
-		sem_unlink(sim->sem_name_buf);
+		if (sem_unlink(sim->sem_name_buf) != 0)
+			status = -1;
 		set_name(sim->sem_name_buf, "/meal_sem_", philo.id);
-		sem_unlink(sim->sem_name_buf);
-		sem_close(philo.meal_sem);
-		sem_close(philo.state_sem);
+		if (sem_unlink(sim->sem_name_buf) != 0)
+			status = -1;
 		i++;
 	}
 	free(sim->philos);
@@ -73,11 +79,11 @@ int	destroy(t_sim *sim)
 	int	statuses[6];
 
 	statuses[0] = wait_all(sim);
-	statuses[1] = sem_unlink(FORKS_SEM);
-	statuses[2] = sem_unlink(PRINTER_SEM);
-	statuses[3] = sem_close(sim->forks);
-	statuses[4] = sem_close(sim->printer_sem);
-	statuses[5] = delete_philos(sim);
+	statuses[1] = delete_philos(sim);
+	statuses[2] = sem_close(sim->forks);
+	statuses[3] = sem_close(sim->printer_sem);
+	statuses[4] = sem_unlink(FORKS_SEM);
+	statuses[5] = sem_unlink(PRINTER_SEM);
 	if (
 		statuses[0] != 0
 		|| statuses[1] != 0

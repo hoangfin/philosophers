@@ -6,10 +6,11 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 01:47:58 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/15 20:47:38 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/16 17:13:47 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include "philo_bonus.h"
@@ -17,25 +18,29 @@
 
 static void	philo_exit(int exit_status, t_philo *philo)
 {
-	int	i;
+	int		i;
+	int		status;
+	t_philo	ph;
 
 	i = 0;
+	status = 0;
 	while (i < philo->sim->number_of_philos)
 	{
-		set_name(philo->sim->sem_name_buf, "/state_sem_", philo->id);
-		sem_unlink(philo->sim->sem_name_buf);
-		set_name(philo->sim->sem_name_buf, "/meal_sem_", philo->id);
-		sem_unlink(philo->sim->sem_name_buf);
-		sem_close(philo->meal_sem);
-		sem_close(philo->state_sem);
+		ph = philo->sim->philos[i];
+		if (sem_close(ph.meal_sem) != 0)
+			status = -1;
+		if (sem_close(ph.state_sem) != 0)
+			status = -1;
 		i++;
 	}
-	sem_unlink(FORKS_SEM);
-	sem_unlink(PRINTER_SEM);
-	sem_close(philo->sim->forks);
-	sem_close(philo->sim->printer_sem);
+	if (sem_close(philo->sim->forks) != 0)
+		status = -1;
+	if (sem_close(philo->sim->printer_sem) != 0)
+		status = -1;
 	free(philo->sim->philos);
-	exit(exit_status);
+	if (status == 0)
+		exit(exit_status);
+	exit(1);
 }
 
 static int	should_terminate(t_philo *philo)
