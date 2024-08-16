@@ -6,15 +6,13 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:31:21 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/16 17:08:39 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/16 18:57:56 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include <errno.h>
 #include "sim_bonus.h"
 #include "utils_bonus.h"
 
@@ -62,11 +60,11 @@ static int	delete_philos(t_sim *sim)
 			status = -1;
 		if (sem_close(philo.state_sem) != 0)
 			status = -1;
-		set_name(sim->sem_name_buf, "/state_sem_", philo.id);
-		if (sem_unlink(sim->sem_name_buf) != 0)
+		set_name(sim->buffer, "/state_sem_", philo.id);
+		if (sem_unlink(sim->buffer) != 0)
 			status = -1;
-		set_name(sim->sem_name_buf, "/meal_sem_", philo.id);
-		if (sem_unlink(sim->sem_name_buf) != 0)
+		set_name(sim->buffer, "/meal_sem_", philo.id);
+		if (sem_unlink(sim->buffer) != 0)
 			status = -1;
 		i++;
 	}

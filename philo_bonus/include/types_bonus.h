@@ -6,7 +6,7 @@
 /*   By: hoatran <hoatran@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:10:16 by hoatran           #+#    #+#             */
-/*   Updated: 2024/08/16 16:47:18 by hoatran          ###   ########.fr       */
+/*   Updated: 2024/08/16 18:57:37 by hoatran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_sim
 	t_philo	*philos;
 	sem_t	*forks;
 	sem_t	*printer_sem;
-	char	sem_name_buf[256];
+	char	buffer[256];
 	int		number_of_philos;
 	int		number_of_pids;
 	int		meal_limit;
